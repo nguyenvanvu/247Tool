@@ -1,0 +1,27 @@
+﻿<Window x:Class="_247vietTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:UC ="clr-namespace:_247vietTool"
+        Title="MainWindow" Height="500" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+           
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding LoginCollection}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <UC:AccountItem DataContext="{Binding}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
+        </ListBox>
+
+
+
+    </Grid>
+</Window>
