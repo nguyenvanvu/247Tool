@@ -26,6 +26,7 @@ using System.IO;
 using OpenQA.Selenium.Support.UI;
 using _247vietTool.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 
 namespace _247vietTool
@@ -46,6 +47,8 @@ namespace _247vietTool
         private const String CODE_ID = "txtCode";
         private const String WELCOME_ID = "welcome";
 
+        private Process process;
+
         private ObservableCollection<Login> _LoginCollection = new ObservableCollection<Login>();
 
         public ObservableCollection<Login> LoginCollection
@@ -65,21 +68,49 @@ namespace _247vietTool
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
+            this.Closed += MainWindow_Closed;
+           
+           
+
+        }
+        Boolean isClose = false;
+
+        void MainWindow_Closed(object sender, EventArgs e)
+        {
+            isClose = true;
+            process.Kill();
+            
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = this;
-            LoginCollection.Add(new Login { UserName = "mr.vunguyen.it",PassWord = "vunguyen"});
-            LoginCollection.Add(new Login { UserName = "niceguymissyou", PassWord = "vunguyen" });
-            
+            this.lstBoxLogin.MouseMove += lstBoxLogin_MouseMove;
 
-            //AutoItX.Run("notepad",null);
+            LoginCollection.Add(new Login { UserName = "mr.vunguyen.it",PassWord = "vunguyen", IsRoot = true});
+
+            process = new Process();
+            process.StartInfo.FileName = "test.exe";
+            // process.StartInfo.Arguments = "[arguments here]";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.EnableRaisingEvents = true;
+            process.Exited += new EventHandler(process_Exited);
+            process.Start();
+        }
+
+        void process_Exited(object sender, EventArgs e)
+        {
+            if (!isClose)           
+                process.Start();
+
         }
 
 
-      
-      
+
+        void lstBoxLogin_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.lstBoxLogin.SelectedItem = sender;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -89,6 +120,11 @@ namespace _247vietTool
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
+        }
+
+        private void btnAddAcount_Click(object sender, RoutedEventArgs e)
+        {
+            LoginCollection.Add(new Login());
         }
 
        

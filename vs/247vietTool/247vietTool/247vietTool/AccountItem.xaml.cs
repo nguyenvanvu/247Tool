@@ -1,5 +1,6 @@
 ﻿using _247vietTool.Models;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,7 +70,9 @@ namespace _247vietTool
         {
             //this.DataContext = this.Login;
             this.Login = this.DataContext as Login;
-            driver = new OpenQA.Selenium.Chrome.ChromeDriver();
+            var driverService = ChromeDriverService.CreateDefaultService();
+            driverService.HideCommandPromptWindow = true;
+            driver = new ChromeDriver(driverService, new ChromeOptions());
             driver.Navigate().GoToUrl(URL);
             SyncUILogin();
 
@@ -77,24 +80,48 @@ namespace _247vietTool
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
-                driver.FindElement(By.Id(USERNAME_ID)).SendKeys(Login.UserName);
-                driver.FindElement(By.Id(PASSWORD_ID)).SendKeys(Login.PassWord);
-                driver.FindElement(By.Id(CODE_ID)).SendKeys(Login.Code);
-
-                string title = (string)js.ExecuteScript("callSubmit();");
-
-                if (!CheckLogin())
+                if (!Login.IsLogin)
                 {
-                    Login.IsLogin = false;
-                    driver.SwitchTo().Alert().Accept();
-                    SyncUILogin();
+                    //vao game
+                    driver.FindElement(By.Id(USERNAME_ID)).SendKeys(Login.UserName);
+                    driver.FindElement(By.Id(PASSWORD_ID)).SendKeys(Login.PassWord);
+                    driver.FindElement(By.Id(CODE_ID)).SendKeys(Login.Code);
 
+                    string title = (string)js.ExecuteScript("callSubmit();");
+
+                    if (!CheckLogin())
+                    {
+                        Login.IsLogin = false;
+                        driver.SwitchTo().Alert().Accept();
+                        SyncUILogin();
+
+                    }
+                    else
+                    {
+                        Login.IsLogin = true;
+                        RunBaccarat();
+                    }
                 }
                 else
                 {
-                    Login.IsLogin = true;
+                    
+                    if (driver.WindowHandles.Count > 1)
+                    {
+                        driver.SwitchTo().Window(driver.WindowHandles.Last()).Close();
+                    }
+
+                    //thoat game
+                    driver.SwitchTo().Window(driver.WindowHandles.First());
+                    driver.Navigate().GoToUrl(URL_LOGIN);
+                    string title = (string)js.ExecuteScript("DoLogout();");
+                    Login.IsLogin = false;
+                    Login.Success = "";
+
+                    driver.Navigate().GoToUrl(URL);         
+                    SyncUILogin();                   
                 }
 
             }
@@ -183,19 +210,7 @@ namespace _247vietTool
 
         private void btnRunGame_Click(object sender, RoutedEventArgs e)
         {
-
             RunBaccarat();
-            var windowIds = driver.WindowHandles;
-
-            driver.SwitchTo().Window(driver.WindowHandles.Last());
-            driver.Navigate().GoToUrl(driver.Url + "?gc=2d");
-            js = driver as IJavaScriptExecutor;
-            js.ExecuteScript("document.title = '12BET - Tai Khoan Chinh';");
-
-
-
-            driver.SwitchTo().Window(driver.WindowHandles.First());
-
         }
 
         private void RunBaccarat()
@@ -211,6 +226,18 @@ namespace _247vietTool
 
 
             }
+
+         
+            var windowIds = driver.WindowHandles;
+
+            driver.SwitchTo().Window(driver.WindowHandles.Last());
+            driver.Navigate().GoToUrl(driver.Url + "?gc=2d");
+            js = driver as IJavaScriptExecutor;
+            if (this.Login.IsRoot)
+                js.ExecuteScript("document.title = '12BET - Tai Khoan Chinh';");
+
+            driver.SwitchTo().Window(driver.WindowHandles.First());
+
         }
     }
 }

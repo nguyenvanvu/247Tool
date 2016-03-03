@@ -8,11 +8,17 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
            
         </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding LoginCollection}">
+        <ListBox Name="lstBoxLogin" ItemsSource="{Binding LoginCollection}"  ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="0">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="Black" />
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <UC:AccountItem DataContext="{Binding}" />
@@ -20,7 +26,7 @@
             </ListBox.ItemTemplate>
             
         </ListBox>
-
+        <Button Content="Thêm tài khoản" Width="200" Padding="4" Margin="8" Click="btnAddAcount_Click" Grid.Row="1" />
 
 
     </Grid>

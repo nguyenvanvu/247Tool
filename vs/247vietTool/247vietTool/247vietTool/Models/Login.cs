@@ -56,7 +56,7 @@ namespace _247vietTool.Models
             }
         }
 
-        private Boolean _IsRoot = true;
+        private Boolean _IsRoot = false;
 
         public Boolean IsRoot
         {
