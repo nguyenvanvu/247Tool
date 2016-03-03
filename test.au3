@@ -21,9 +21,9 @@ While 1
 
 		 Local $aList = WinList("12BET - Google Chrome")
 
-		 If	$accChinh == 0 Then
-			$accChinh = WinGetHandle("12BET - Tai Khoan Chinh - Google Chrome")
-		 EndIf
+
+		 $accChinh = WinGetHandle("12BET - Tai Khoan Chinh - Google Chrome")
+
 
 
 
@@ -55,7 +55,6 @@ While 1
 			   EndIf
 			Next
 			Sleep(20)
-			WinSetState($hwndActive, "",  @SW_ENABLE)
 		 EndIf
    EndIf
    Sleep(50)
