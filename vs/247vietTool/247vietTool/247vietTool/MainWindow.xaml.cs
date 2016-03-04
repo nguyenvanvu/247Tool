@@ -48,6 +48,7 @@ namespace _247vietTool
         private const String WELCOME_ID = "welcome";
 
         private Process process;
+        private Process processVideo;
 
         private ObservableCollection<Login> _LoginCollection = new ObservableCollection<Login>();
 
@@ -79,6 +80,7 @@ namespace _247vietTool
         {
             isClose = true;
             process.Kill();
+            processVideo.Kill();
             
         }
 
@@ -90,12 +92,19 @@ namespace _247vietTool
             LoginCollection.Add(new Login { UserName = "mr.vunguyen.it",PassWord = "vunguyen", IsRoot = true});
 
             process = new Process();
-            process.StartInfo.FileName = "test.exe";
+            process.StartInfo.FileName = "247Auto.exe";
             // process.StartInfo.Arguments = "[arguments here]";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.EnableRaisingEvents = true;
             process.Exited += new EventHandler(process_Exited);
             process.Start();
+
+            processVideo = new Process();
+            processVideo.StartInfo.FileName = "VideoinPictureforVista.exe";
+            // process.StartInfo.Arguments = "[arguments here]";
+            processVideo.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            processVideo.Start();
+
         }
 
         void process_Exited(object sender, EventArgs e)
@@ -104,8 +113,6 @@ namespace _247vietTool
                 process.Start();
 
         }
-
-
 
         void lstBoxLogin_MouseMove(object sender, MouseEventArgs e)
         {

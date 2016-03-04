@@ -175,8 +175,7 @@ namespace _247vietTool
         private void SyncUILogin()
         {
             driver.Navigate().GoToUrl(URL_LOGIN);
-            js = driver as IJavaScriptExecutor;
-            
+            js = driver as IJavaScriptExecutor;            
             var arrScreen = driver.GetScreenshot().AsByteArray;
             using (var msScreen = new MemoryStream(arrScreen))
             {
@@ -197,9 +196,6 @@ namespace _247vietTool
 
                     imgCaptcha.Source = bitmapImage;
                 }
-
-
-
             }
         }
 

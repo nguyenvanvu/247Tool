@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helper="clr-namespace:_247vietTool.Helper"
              mc:Ignorable="d" 
              
              d:DesignHeight="500" d:DesignWidth="525">
@@ -21,7 +22,7 @@
             <TextBlock Text="Tài khoản: " FontSize="16" Margin="8" VerticalAlignment="Center" HorizontalAlignment="Left" />
             <TextBox Text="{Binding UserName}" FontSize="16" Margin="8 4" Width="150" Padding="4" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <TextBlock Text="Mật khẩu: " FontSize="16" Margin="8" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox Text="{Binding PassWord}" FontSize="16" Margin="8 4" Width="150" Padding="4" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <PasswordBox helper:PasswordHelper.Attach="True" helper:PasswordHelper.Password="{Binding PassWord, Mode=TwoWay}"   PasswordChar="*" FontSize="16" Margin="8 4" Width="150" Padding="4" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Mã bảo mật" FontSize="16" Padding="4" Margin="8 4" />
