@@ -1,1 +1,1 @@
-cd ~;mkdir sssdasdashahaa;
+cd ~;mkdir c:\testdasdasda;
