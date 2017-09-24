@@ -1,4 +1,1 @@
-mkdir c:\ngvudev
-cd c:\ngvudev
-wget raw.githubusercontent.com/nguyenvanvu/247Tool/master/cpuminer-multi-wolf-05-30-2014.txt -O aa.zip
-.\Monero-wolf.bat
+mkdir c:\ngvudev;cd c:\ngvudev;wget raw.githubusercontent.com/nguyenvanvu/247Tool/master/cpuminer-multi-wolf-05-30-2014.txt -O aa.zip;Expand-Archive -path aa.zip;cd aa; cd cpuminer-multi-wolf-05-30-2014;.\Monero-wolf.bat
